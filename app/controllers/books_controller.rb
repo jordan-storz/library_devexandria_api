@@ -10,7 +10,7 @@ class BooksController < ApplicationController
 
   # GET /books/1
   def show
-    render json: @book
+    render json: @book, include: ['tags']
   end
 
   # POST /books
