@@ -5,8 +5,6 @@ class CreateBooks < ActiveRecord::Migration[5.0]
       t.string :content
       t.string :source_url
 
-      t.references :tag, foreign_key: true
-
       t.timestamps
     end
   end

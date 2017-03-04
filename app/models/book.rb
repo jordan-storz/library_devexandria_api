@@ -1,4 +1,4 @@
 class Book < ApplicationRecord
-  has_and_belongs_to_many :library
-  has_and_belongs_to_many :tag
+  has_and_belongs_to_many :libraries
+  has_and_belongs_to_many :tags
 end
