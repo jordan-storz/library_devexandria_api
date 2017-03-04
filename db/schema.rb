@@ -10,9 +10,61 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170304183837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "books", force: :cascade do |t|
+    t.string   "title"
+    t.string   "content"
+    t.string   "source_url"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_books_on_tag_id", using: :btree
+  end
+
+  create_table "books_libraries", id: false, force: :cascade do |t|
+    t.integer "book_id",    null: false
+    t.integer "library_id", null: false
+  end
+
+  create_table "books_tags", id: false, force: :cascade do |t|
+    t.integer "tag_id",  null: false
+    t.integer "book_id", null: false
+  end
+
+  create_table "libraries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_libraries_on_user_id", using: :btree
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "library_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["library_id"], name: "index_subscriptions_on_library_id", using: :btree
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "books", "tags"
+  add_foreign_key "libraries", "users"
+  add_foreign_key "subscriptions", "libraries"
+  add_foreign_key "subscriptions", "users"
 end
