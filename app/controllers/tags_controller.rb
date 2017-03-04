@@ -47,8 +47,6 @@ class TagsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def tag_params
       res = ActiveModelSerializers::Deserialization.jsonapi_parse(params)
-      puts "DESERIALIZED PARAMS"
-      puts res
       res
     end
 end

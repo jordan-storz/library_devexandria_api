@@ -46,6 +46,8 @@ class SubscriptionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def subscription_params
-      params.require(:subscription).permit(:user_id)
+      # params.require(:subscription).permit(:user_id)
+      res = ActiveModelSerializers::Deserialization.jsonapi_parse(params)
+      res
     end
 end

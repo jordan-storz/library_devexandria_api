@@ -46,6 +46,8 @@ class FollowsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def follow_params
-      params.fetch(:follow, {})
+      # params.fetch(:follow, {})
+      res = ActiveModelSerializers::Deserialization.jsonapi_parse(params)
+      res
     end
 end
