@@ -1,6 +1,4 @@
 class Library < ApplicationRecord
-  belongs_to :user, inverse_of: :user
+  belongs_to :user, inverse_of: :user, autosave: true
   has_and_belongs_to_many :book
-  has_many :subscription, dependent: :destroy
-  has_many :user, through: :subscription
 end

@@ -12,7 +12,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create subscription" do
     assert_difference('Subscription.count') do
-      post subscriptions_url, params: { subscription: { library_id: @subscription.library_id, user_id: @subscription.user_id } }, as: :json
+      post subscriptions_url, params: { subscription: { user_id: @subscription.user_id } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update subscription" do
-    patch subscription_url(@subscription), params: { subscription: { library_id: @subscription.library_id, user_id: @subscription.user_id } }, as: :json
+    patch subscription_url(@subscription), params: { subscription: { user_id: @subscription.user_id } }, as: :json
     assert_response 200
   end
 

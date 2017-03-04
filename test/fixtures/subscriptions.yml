@@ -2,8 +2,6 @@
 
 one:
   user: one
-  library: one
 
 two:
   user: two
-  library: two
