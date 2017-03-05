@@ -10,7 +10,7 @@ class TagsController < ApplicationController
 
   # GET /tags/1
   def show
-    render json: @tag
+    render json: @tag, include: ['books']
   end
 
   # POST /tags

@@ -10,7 +10,7 @@ class LibrariesController < ApplicationController
 
   # GET /libraries/1
   def show
-    render json: @library
+    render json: @library, include: ['books']
   end
 
   # POST /libraries
