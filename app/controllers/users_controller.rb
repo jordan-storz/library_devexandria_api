@@ -3,9 +3,19 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    if params[:username] then
+      @user = User.find_or_create_by({username: params[:username]})
+      if @user.library == nil then
+        @user.library = Library.create(user: @user)
+      end
+      puts "THIS USER MAY HAVE A LIB:"
+      puts @user.library
+      render json: @user, include: ['library', 'followees', 'followers']
+    else
+      @users = User.all
+      render json: @users
+    end
 
-    render json: @users
   end
 
   # GET /users/1
@@ -41,7 +51,8 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find_or_create_by(username: params[:id])
+      # @user = User.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

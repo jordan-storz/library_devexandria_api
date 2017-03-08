@@ -1,4 +1,13 @@
-jordan = User.create(username: "jordan-storz")
+[
+  User,
+  Library,
+  Book,
+  Tag
+].each do |m|
+  ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{m.table_name} RESTART IDENTITY CASCADE;")
+end
+
+jordan = User.create(username: "jelly-storz")
 zelda  = User.create(username: "zelda-princess")
 
 library1 = Library.create(user: jordan)
