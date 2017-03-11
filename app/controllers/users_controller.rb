@@ -8,8 +8,6 @@ class UsersController < ApplicationController
       if @user.library == nil then
         @user.library = Library.create(user: @user)
       end
-      puts "THIS USER MAY HAVE A LIB:"
-      puts @user.library
       render json: @user, include: ['library', 'followees', 'followers']
     else
       @users = User.all
