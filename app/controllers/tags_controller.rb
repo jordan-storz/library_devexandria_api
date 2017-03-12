@@ -3,9 +3,15 @@ class TagsController < ApplicationController
 
   # GET /tags
   def index
-    @tags = Tag.all
-
-    render json: @tags
+    if params[:name] then
+      @tag = Tag.find_or_create_by({name: params[:name]})
+      puts "FINDING TAG"
+      puts @tag
+      render json: @tag, include: ['libraries', 'books']
+    else
+      @tags = Tag.all
+      render json: @tags
+    end
   end
 
   # GET /tags/1
@@ -16,12 +22,13 @@ class TagsController < ApplicationController
   # POST /tags
   def create
     @tag = Tag.new(tag_params)
-
-    if @tag.save
-      render json: @tag, status: :created, location: @tag
-    else
-      render json: @tag.errors, status: :unprocessable_entity
-    end
+    puts "SAVING TAG< BUT FIRST..."
+    puts tag_params
+    # if @tag.save
+    #   render json: @tag, status: :created, location: @tag
+    # else
+    #   render json: @tag.errors, status: :unprocessable_entity
+    # end
   end
 
   # PATCH/PUT /tags/1
