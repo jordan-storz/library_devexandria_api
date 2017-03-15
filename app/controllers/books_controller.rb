@@ -67,9 +67,14 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   def update
     if @book.title then
-      puts "book needs scraping"
+      puts "doing a regular old update"
+      if @book.update(book_params)
+        render json: @book
+      else
+        render json: @book.errors, status: :unprocessable_entity
+      end
     else
-      puts "book doesn't need scraping"
+      puts "book needs scraping"
       puts @book.title
       @book_details = HTTParty.post(
         'http://localhost:5200/populate',

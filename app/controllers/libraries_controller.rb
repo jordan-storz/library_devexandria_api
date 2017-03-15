@@ -3,14 +3,22 @@ class LibrariesController < ApplicationController
 
   # GET /libraries
   def index
-    @libraries = Library.all
+    if params[:user_id] then
+      puts "looking for library"
+      @user = User.find(params[:user_id])
+      @library = @user.library
 
-    render json: @libraries
+      render json: @library
+    else
+      @libraries = Library.all
+
+      render json: @libraries
+    end
   end
 
   # GET /libraries/1
   def show
-    render json: @library, include: ['books']
+    render json: @library, include: ['books', 'user', 'tags']
   end
 
   # POST /libraries
