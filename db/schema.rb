@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312024937) do
+ActiveRecord::Schema.define(version: 20170316002110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 20170312024937) do
   create_table "books_tags", id: false, force: :cascade do |t|
     t.integer "tag_id",  null: false
     t.integer "book_id", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "book_id"
+    t.integer  "library_id"
+    t.string   "event_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_events_on_book_id", using: :btree
+    t.index ["library_id"], name: "index_events_on_library_id", using: :btree
+    t.index ["user_id"], name: "index_events_on_user_id", using: :btree
   end
 
   create_table "follows", force: :cascade do |t|
@@ -80,6 +92,9 @@ ActiveRecord::Schema.define(version: 20170312024937) do
   end
 
   add_foreign_key "books", "tags"
+  add_foreign_key "events", "books"
+  add_foreign_key "events", "libraries"
+  add_foreign_key "events", "users"
   add_foreign_key "libraries", "users"
   add_foreign_key "subscriptions", "libraries"
   add_foreign_key "subscriptions", "users"

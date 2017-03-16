@@ -2,12 +2,13 @@
   User,
   Library,
   Book,
-  Tag
+  Tag,
+  Event
 ].each do |m|
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{m.table_name} RESTART IDENTITY CASCADE;")
 end
 
-jordan = User.create(username: "jelly-storz")
+jordan = User.create(username: "jelly__")
 zelda  = User.create(username: "zelda-princess")
 
 library1 = Library.create(user: jordan)
@@ -18,6 +19,20 @@ book1 = Book.create(
   content: "Ruby on Rails is an awesome framework for quickly and easily setting up a web application. In this tutorial I will show you how to build a blog platform using Ruby on Rails, we will make use of the gem ckeditor which is an integration gem for Ckeditor.",
   source_url: "https://scotch.io/tutorials/build-a-blog-with-ruby-on-rails-part-1",
   libraries: [library1, library2]
+)
+
+Event.create(
+  user: jordan,
+  book: book1,
+  event_type: 'add',
+  created_at: Date.current
+)
+
+Event.create(
+  user: zelda,
+  book: book1,
+  event_type: 'add',
+  created_at: 1.day.ago
 )
 
 book2 = Book.create(
