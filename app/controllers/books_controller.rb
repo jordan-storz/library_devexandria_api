@@ -77,7 +77,7 @@ class BooksController < ApplicationController
       puts "book needs scraping"
       puts @book.title
       @book_details = HTTParty.post(
-        'http://localhost:5200/populate',
+        ENV["scraper_url"],
         body: {
           url: book_params[:source_url]
         }.to_json,
