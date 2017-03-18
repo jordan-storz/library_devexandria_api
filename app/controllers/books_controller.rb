@@ -76,8 +76,10 @@ class BooksController < ApplicationController
     else
       puts "book needs scraping"
       puts @book.title
+      puts "SCRAPER_URL:"
+      puts Rails.application.secrets["scraper_url"]
       @book_details = HTTParty.post(
-        ENV["scraper_url"],
+        Rails.application.secrets["scraper_url"],
         body: {
           url: book_params[:source_url]
         }.to_json,
@@ -85,6 +87,8 @@ class BooksController < ApplicationController
           'Content-Type' => 'application/json'
         }
       )
+      puts "BOOK DETAILS"
+      puts @book_details
       @params = book_params.merge @book_details.symbolize_keys
       if @book_details["tags"] then
         @tag_ids = []

@@ -1,5 +1,5 @@
 production:
-  scraper_url: "https://evening-badlands-71821.herokuapp.com/"
+  SCRAPER_URL: "https://evening-badlands-71821.herokuapp.com/"
 
 development:
-  scraper_url: "http://localhost:5200"
+  SCRAPER_URL: "http://localhost:5200"

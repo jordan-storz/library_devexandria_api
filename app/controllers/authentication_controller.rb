@@ -5,6 +5,9 @@ class AuthenticationController < ApplicationController
     code = params[:code]
     @result = HTTParty.post("https://github.com/login/oauth/access_token?client_id=#{client_id}&client_secret=#{client_secret}&code=#{code}")
     @access_token = @result.parsed_response.split('&')[0].split('=')[1]
+    @request_options = {
+
+    }
     @user_info = HTTParty.get("https://api.github.com/user?access_token=#{@access_token}")
     puts "RESPONSE FROM GITHUB"
     puts @user_info
