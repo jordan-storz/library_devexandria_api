@@ -22,8 +22,6 @@ class TagsController < ApplicationController
   # POST /tags
   def create
     @tag = Tag.new(tag_params)
-    puts "SAVING TAG< BUT FIRST..."
-    puts tag_params
     # if @tag.save
     #   render json: @tag, status: :created, location: @tag
     # else

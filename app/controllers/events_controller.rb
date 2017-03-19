@@ -25,7 +25,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    render json: @event, include: ['user', 'book']
+    render json: @event
   end
 
   def create
