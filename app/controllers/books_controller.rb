@@ -23,8 +23,6 @@ class BooksController < ApplicationController
   # POST /books
   def create
     @book = Book.find_or_create_by(source_url: book_params[:source_url])
-    puts "PARAMS"
-    puts book_params
 
     if @book.title then
       if @book.update(book_params)
@@ -67,17 +65,12 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   def update
     if @book.title then
-      puts "doing a regular old update"
       if @book.update(book_params)
         render json: @book
       else
         render json: @book.errors, status: :unprocessable_entity
       end
     else
-      puts "book needs scraping"
-      puts @book.title
-      puts "SCRAPER_URL:"
-      puts Rails.application.secrets["scraper_url"]
       @book_details = HTTParty.post(
         Rails.application.secrets["scraper_url"],
         body: {
@@ -87,33 +80,22 @@ class BooksController < ApplicationController
           'Content-Type' => 'application/json'
         }
       )
-      puts "BOOK DETAILS"
-      puts @book_details
       @params = book_params.merge @book_details.symbolize_keys
       if @book_details["tags"] then
         @tag_ids = []
-        puts "THERE ARE TAGS FOR SURE"
         @book_details["tags"].each do |tagname|
           tag = Tag.find_or_create_by(name: tagname)
-          puts tag
           @params[:tag_ids].push tag.id
         end
       end
 
       @params.delete :tags
-      puts "symbol hash"
-      puts @params
       if @book.update(@params)
         render json: @book
       else
         render json: @book.errors, status: :unprocessable_entity
       end
     end
-    # if @book.update(book_params)
-    #   render json: @book
-    # else
-    #   render json: @book.errors, status: :unprocessable_entity
-    # end
   end
 
   # DELETE /books/1
