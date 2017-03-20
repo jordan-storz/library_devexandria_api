@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(version: 20170316002110) do
     t.integer  "book_id"
     t.integer  "library_id"
     t.string   "event_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "remove_reason"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["book_id"], name: "index_events_on_book_id", using: :btree
     t.index ["library_id"], name: "index_events_on_library_id", using: :btree
     t.index ["user_id"], name: "index_events_on_user_id", using: :btree
