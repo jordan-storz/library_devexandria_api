@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  validates :username, length: {minumum: 2}
   has_one :library, dependent: :destroy
 
   has_many :followers, through: :follower_follow, source: :follower
