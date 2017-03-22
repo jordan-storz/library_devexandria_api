@@ -27,7 +27,7 @@ module LibraryApi
     # Skip views, helpers and assets when generating a new resource.
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins 'https://library-of-devexandria.firebaseapp.com', 'http://localhost:4200'
+        origins 'https://library-of-devexandria.firebaseapp.com', 'http://localhost:4200', 'https://library-of-devexandria.com'
         resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
       end
     end
