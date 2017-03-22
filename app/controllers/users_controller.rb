@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    if params[:username] then
+    if params[:username] && params[:username].length > 1 then
       @user = User.find_or_create_by({username: params[:username]})
       if @user.library == nil then
         @user.library = Library.create(user: @user)
