@@ -3,12 +3,15 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    if params[:username] then
+    if (params[:username]) then
       @user = User.find_or_create_by({username: params[:username]})
       if @user.library == nil then
         @user.library = Library.create(user: @user)
       end
       render json: @user, include: ['library', 'followees', 'followers']
+      if @user.username.length < 3 then
+        @user.destroy
+      end
     else
       @users = User.all
       render json: @users
