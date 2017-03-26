@@ -9,8 +9,6 @@ class AuthenticationController < ApplicationController
 
     }
     @user_info = HTTParty.get("https://api.github.com/user?access_token=#{@access_token}")
-    puts "RESPONSE FROM GITHUB"
-    puts @user_info
     user = find_or_create_user(@user_info["login"])
 
     response = {username: @user_info["login"], token: @access_token}
